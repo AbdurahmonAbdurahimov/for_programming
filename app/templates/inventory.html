@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Inventory</title>
+    <meta charset="UTF-8" />
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        table { width: 50%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h2>📦 Real-Time Inventory Updates</h2>
+    <table>
+        <thead>
+            <tr><th>Ingredient</th><th>Quantity (g)</th></tr>
+        </thead>
+        <tbody id="inventory-body">
+            <!-- Dynamic rows here -->
+        </tbody>
+    </table>
+
+    <script>
+        const socket = new WebSocket("ws://localhost:8000/ws/inventory");
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            if (data.type === "update") {
+                const ingredients = data.ingredients;
+                const tableBody = document.getElementById("inventory-body");
+                tableBody.innerHTML = "";
+
+                for (let name in ingredients) {
+                    const quantity = ingredients[name];
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td>${name}</td><td>${quantity}</td>`;
+                    tableBody.appendChild(row);
+                }
+            }
+        };
+
+        socket.onopen = () => console.log("WebSocket connected");
+        socket.onclose = () => console.log("WebSocket disconnected");
+    </script>
+</body>
+</html>
