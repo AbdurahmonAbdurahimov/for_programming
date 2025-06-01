@@ -1,0 +1,19 @@
+
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>Dashboard - Monthly Reports</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <canvas id="usageChart"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="summaryChart"></canvas>
+    </div>
+</div>
+
+<div id="flag-warning" class="alert alert-warning mt-4 d-none"></div>
+
+<script src="/static/js/dashboard.js"></script>
+{% endblock %}

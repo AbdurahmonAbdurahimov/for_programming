@@ -1,0 +1,30 @@
+
+{% extends 'base.html' %}
+{% block title %}Serve Meal{% endblock %}
+{% block content %}
+<h2>Serve a Meal</h2>
+<form id="serve-form" class="row g-3">
+    <div class="col-md-6">
+        <select id="meal-select" class="form-select" required></select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-success w-100">Serve Meal</button>
+    </div>
+</form>
+
+<div id="alert-box" class="alert alert-danger mt-3 d-none"></div>
+
+<h4 class="mt-5">Served Meals Log</h4>
+<table class="table table-bordered" id="served-meals-table">
+    <thead class="table-dark">
+        <tr>
+            <th>Meal</th>
+            <th>Served By</th>
+            <th>Timestamp</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script src="/static/js/serve.js"></script>
+{% endblock %}

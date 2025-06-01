@@ -1,0 +1,32 @@
+
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<h2>Login</h2>
+<form id="login-form" class="w-50 mx-auto mt-4">
+    <input type="text" class="form-control mb-2" id="username" placeholder="Email" required>
+    <input type="password" class="form-control mb-2" id="password" placeholder="Password" required>
+    <button class="btn btn-primary w-100" type="submit">Login</button>
+</form>
+<script>
+document.getElementById("login-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const res = await fetch("/api/v1/login/access-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ username: email, password: password })
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem("access_token", "Bearer " + data.access_token);
+        window.location.href = "/";
+    } else {
+        alert("Invalid credentials.");
+    }
+});
+</script>
+{% endblock %}

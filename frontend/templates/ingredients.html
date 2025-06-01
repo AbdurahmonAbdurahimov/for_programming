@@ -1,0 +1,34 @@
+
+{% extends 'base.html' %}
+{% block title %}Ingredients{% endblock %}
+{% block content %}
+<h2>Ingredient Management</h2>
+<form id="ingredient-form" class="row g-3">
+    <div class="col-md-4">
+        <input type="text" class="form-control" placeholder="Ingredient name" id="name" required>
+    </div>
+    <div class="col-md-3">
+        <input type="number" class="form-control" placeholder="Quantity (g)" id="quantity" required>
+    </div>
+    <div class="col-md-3">
+        <input type="date" class="form-control" id="delivery_date" required>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Add</button>
+    </div>
+</form>
+
+<table class="table table-bordered mt-4" id="ingredients-table">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Quantity (g)</th>
+            <th>Delivery Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script src="/static/js/ingredients.js"></script>
+{% endblock %}
