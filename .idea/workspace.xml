@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f8c2a8-0420-423a-a8e9-16eaeec8beba" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alembic/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/alembic/env.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/base_class.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/base_class.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/ingredient.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/ingredient.py" afterDir="false" />
-    </list>
+    <list default="true" id="95f8c2a8-0420-423a-a8e9-16eaeec8beba" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,7 +84,7 @@
       <workItem from="1748765547589" duration="2685000" />
       <workItem from="1748768530642" duration="2892000" />
       <workItem from="1748811423035" duration="773000" />
-      <workItem from="1748860452307" duration="1134000" />
+      <workItem from="1748860452307" duration="1487000" />
     </task>
     <servers />
   </component>

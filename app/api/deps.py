@@ -9,8 +9,10 @@ from app.crud import crud_user as crud
 from app.schemas.meal_serving import TokenPayload
 from app.models import models
 from app.core import security
-from app.core.config import settings
+from app.core.config import get_settings
 from app.db.session import SessionLocal
+
+settings = get_settings()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_STR}/login/access-token")
 
