@@ -10,8 +10,9 @@ from app.schemas.user import User, UserCreate, UserUpdate
 from app.crud import crud_user
 from app.api import deps
 from app.core import security
-from app.core.config import settings
+from app.core.config import get_settings
 
+settings = get_settings()
 router = APIRouter()
 
 
