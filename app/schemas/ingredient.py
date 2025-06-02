@@ -17,9 +17,9 @@ class IngredientCreate(IngredientBase):
 
 # Properties to receive on item update
 class IngredientUpdate(BaseModel):
-    name: Optional[str] = None
-    quantity: Optional[float] = Field(default=None, ge=0.0)
-    min_quantity: Optional[float] = Field(default=None, ge=0.0)
+    name: str | None = None
+    quantity: float | None = Field(default=None, ge=0.0)
+    min_quantity: float | None = Field(default=None, ge=0.0)
 
 
 # Properties shared by models stored in DB

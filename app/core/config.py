@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Optional, Union
 from pydantic import AnyHttpUrl, field_validator
 from pydantic_settings import BaseSettings
 from pydantic import ValidationInfo  # ✅
+from functools import cache
 
 
 class Settings(BaseSettings):
@@ -42,4 +43,7 @@ class Settings(BaseSettings):
         env_file = ".env"
 
 
-settings = Settings()
+
+@cache
+def get_settings() -> Settings:
+    return Settings()
