@@ -7,3 +7,4 @@ settings = get_settings()
 
 engine = create_engine(settings.SQLALCHEMY_DATABASE_URI)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+

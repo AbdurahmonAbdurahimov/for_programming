@@ -1,45 +1,62 @@
-
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Form, Depends, status
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
-from app.db.session import get_db
-from app.models.ingredient import Ingredient as IngredientModel
-from app.models.meal import Meal as MealModel
+from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
+from app.db.session import SessionLocal
+from app.models.models import (
+    Ingredient as IngredientModel,
+    Meal as MealModel,
+    Meal,
+    MealIngredient,
+    Ingredient,
+    MealServing,
+)
+from app.core.security import get_current_user  # Ensure this dependency exists
+from app.urls import notify_inventory_update
+import asyncio
+
+get_db = SessionLocal()
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
+
+# ---------- GET ROUTES ----------
 
 @router.get("/", response_class=HTMLResponse)
 def dashboard(request: Request):
     return templates.TemplateResponse("dashboard.html", {"request": request})
 
+
 @router.get("/ingredients/", response_class=HTMLResponse)
-def ingredients_view(request: Request, db: Session = get_db()):
+def ingredients_view(request: Request, db: Session = Depends(get_db)):
     ingredients = db.query(IngredientModel).all()
-    return templates.TemplateResponse("ingredients.html", {"request": request, "ingredients": ingredients})
+    return templates.TemplateResponse("ingredients.html", {
+        "request": request,
+        "ingredients": ingredients
+    })
+
 
 @router.get("/serve-meal/", response_class=HTMLResponse)
-def serve_meal_view(request: Request, db: Session = get_db()):
+def serve_meal_view(request: Request, db: Session = Depends(get_db)):
     meals = db.query(MealModel).all()
-    return templates.TemplateResponse("serve_meal.html", {"request": request, "meals": meals})
+    return templates.TemplateResponse("serve_meal.html", {
+        "request": request,
+        "meals": meals
+    })
+
 
 @router.get("/charts/", response_class=HTMLResponse)
-def charts_view(request: Request, db: Session = get_db()):
+def charts_view(request: Request, db: Session = Depends(get_db)):
     ingredients = db.query(IngredientModel).all()
     labels = [i.name for i in ingredients]
     data = [i.quantity for i in ingredients]
-    return templates.TemplateResponse("charts.html", {"request": request, "labels": labels, "data": data})
+    return templates.TemplateResponse("charts.html", {
+        "request": request,
+        "labels": labels,
+        "data": data
+    })
 
-
-
-from fastapi import Form, status
-from fastapi.responses import RedirectResponse
-from app.models.models import Meal, MealIngredient, Ingredient, MealServing
-from app.db.session import get_db
-from sqlalchemy.orm import Session
-from fastapi import Request, Depends
-from app.core.security import get_current_user  # Assumes a security dependency for auth
+# ---------- POST ROUTE FOR SERVING MEALS ----------
 
 @router.post("/serve-meal/", response_class=HTMLResponse)
 def serve_meal_post(
@@ -70,14 +87,12 @@ def serve_meal_post(
                 "meals": db.query(Meal).all()
             })
 
-    # Deduct ingredients
+    # Deduct ingredients and notify via WebSocket
     for item in meal_ingredients:
         ingredient = db.query(Ingredient).filter(Ingredient.id == item.ingredient_id).first()
         ingredient.quantity -= item.quantity * portions
-        from app.urls import notify_inventory_update
-        import asyncio
-        asyncio.create_task(notify_inventory_update(f'Inventory updated: {ingredient.name}'))
         db.add(ingredient)
+        asyncio.create_task(notify_inventory_update(f'Inventory updated: {ingredient.name}'))
 
     # Log the meal serving
     new_serving = MealServing(

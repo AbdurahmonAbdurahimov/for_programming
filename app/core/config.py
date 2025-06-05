@@ -35,7 +35,7 @@ class Settings(BaseSettings):
             return v
         return (
             f"postgresql://{info.data['POSTGRES_USER']}:{info.data['POSTGRES_PASSWORD']}"
-            f"@{info.data['POSTGRES_SERVER']}:5432/{info.data['POSTGRES_DB']}"
+            f"@{info.data['POSTGRES_SERVER']}:5433/{info.data['POSTGRES_DB']}"
         )
 
     class Config:

@@ -10,9 +10,10 @@ import asyncio
 from contextlib import asynccontextmanager
 
 from app.api.api import api_router
-from app.core.config import settings
+from app.core.config import get_settings
 from app.api.websockets import start_background_tasks
 
+settings = get_settings()
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
